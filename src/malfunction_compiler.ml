@@ -652,6 +652,8 @@ let setup_options options =
       *)
   | `Shared ->
      Clflags.shared := true
+  | `Include dir ->
+     Clflags.include_dirs := dir :: !Clflags.include_dirs
   | `Package s -> 
      let packages = String.split_on_char ',' s in
      let dirs = List.map Findlib.package_directory packages in
@@ -759,7 +761,7 @@ let delete_temps outfiles =
   in
   List.iter Misc.remove_file temps
 
-type options = [`Verbose | `Shared | `ForPack of string | `Package of string | `Dontlink of string | `Linkpkg | `Thread | `Optimize | `Bytecode] list
+type options = [`Verbose | `Shared | `ForPack of string | `Include of string | `Package of string | `Dontlink of string | `Linkpkg | `Thread | `Optimize | `Bytecode] list
 
 let ensure_cmi ~module_name ~filename =
   let cmi = module_name ^ ".cmi" in
